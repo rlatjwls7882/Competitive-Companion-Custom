@@ -16,7 +16,8 @@ export class BaekjoonOnlineJudgeProblemParser extends Parser {
     const elem = htmlToElement(html);
     const task = new TaskBuilder('Baekjoon Online Judge').setUrl(url);
 
-    task.setName(url.split('https://www.acmicpc.net/problem/')[1]);
+    if(url.indexOf('contest')==-1) task.setName(url.split('https://www.acmicpc.net/problem/')[1]);
+    else task.setName(elem.querySelector('#problem_title').textContent);
 
     const constraintCells = elem.querySelectorAll('#problem-info > tbody > tr > td');
 
