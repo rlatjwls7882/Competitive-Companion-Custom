@@ -55,7 +55,17 @@ export class CodeforcesProblemParser extends Parser {
   private parseMainProblem(html: string, url: string, task: TaskBuilder): void {
     const elem = htmlToElement(html);
 
-    task.setName(elem.querySelector('.problem-statement > .header > .title').textContent.trim());
+    let name = elem.querySelector('.problem-statement > .header > .title').textContent.trim().split('.')[0];
+
+    if(url.indexOf('problemset')!=-1) {
+      const a = url.split('https://codeforces.com/problemset/problem/')[1].split('/')[0];
+      console.log(a);
+      name = a+name;
+    } else if(url.indexOf('contest')!=-1) {
+      const a = url.split('https://codeforces.com/contest/')[1].split('/')[0];
+      name = a+name;
+    }
+    task.setName(name);
 
     if (url.includes('/edu/')) {
       const breadcrumbs = [...elem.querySelectorAll('.eduBreadcrumb > a')].map(el => el.textContent.trim());

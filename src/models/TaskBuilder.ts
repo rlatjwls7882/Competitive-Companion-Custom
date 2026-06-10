@@ -46,7 +46,9 @@ export class TaskBuilder {
   }
 
   public setName(name: string): TaskBuilder {
+    console.log(name);
     this.name = name;
+    console.log(this.name);
     return this.updateJavaTaskClassFromName();
   }
 
